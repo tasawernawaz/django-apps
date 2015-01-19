@@ -1,0 +1,20 @@
+.login_container {
+    background: none repeat scroll 0 0 white;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    min-width: 300px;
+    width: 28em;
+}
+
+.welcome{
+    /*background-color: #bce8f1 ;*/
+    /*font-family: courier;*/
+    text-align: right;
+
+}
+
+.btn_logout{
+    float: right;
+}

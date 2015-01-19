@@ -1,0 +1,114 @@
+{% extends "tasks/base.html" %}
+{% block content %}
+    <div class="container">
+
+        <div class="page-header">
+            <div class="welcome">
+                <a role="button" class="btn_logout btn btn-link" href={% url "logout" %}>Logout</a>
+
+                <p style="text-align: right"> Welcome: {{ user.first_name }}</p>
+            </div>
+            <h1 class="text-center">My Tasks</h1>
+        </div>
+
+        {% if not tasks_list %}
+            <strong>No task found</strong>
+        {% else %}
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Short Summary</th>
+                    <th>Long Summary</th>
+                    <th>Url</th>
+                    <th>Email</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks_list %}
+                    <tr id={{ task.id }}>
+                        <td>{{ task.short_summary }}</td>
+                        <td>{{ task.long_summary }}</td>
+                        <td>{{ task.url }}</td>
+                        <td><a onclick="send_email({{ task.id }})">Email</a></td>
+                        <td>{{ task.created }}</td>
+                        <td>{{ task.updated }}</td>
+                        <td><input class="btn btn-success" type="button" value="Edit"
+                                   onclick="load_data({{ task.id }})">
+                        </td>
+                        <td><input class="btn btn-danger" type="button" value="Delete"
+                                   onclick="delete_task({{ task.id }})">
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+        {#new/ edit task form#}
+
+        <div>
+            <h3>Add new or edit previous task</h3>
+            <div>
+                <form method="POST" action="" id="task_form" class="form-horizontal">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="btn btn-primary" type="submit" value="Save" name="submit">
+                </form>
+                <strong style="color: red">{{ error }}</strong>
+            </div>
+        </div>
+        {#javascript#}
+
+        <script>
+
+            function delete_task(task_id) {
+
+                var r = confirm("Are you sure want to delete");
+                if (r == false) {
+                    return false;
+                }
+                {#            var csrf = Ext.util.Cookies.get('csrftoken');#}
+                $.ajax({
+                    type: "POST",
+                    url: "/tasks/delete/",
+                    data: {task_id: task_id,
+                        csrfmiddlewaretoken: '{{csrf_token}}' },
+                    success: function (data) {
+                        $("#" + task_id).hide();
+
+                    }
+                });
+            }
+
+            function load_data(task_id) {
+                var $row = $("#" + task_id);
+                $("#id_short_summary").val($row.find("td:eq(0)").text());
+                $("#id_long_summary").val($row.find("td:eq(1)").text());
+                $("#id_url").val($row.find("td:eq(2)").text());
+                $("#id_task_id").val(task_id);
+
+            }
+
+
+            function send_email(task_id) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/tasks/email/",
+                    data: {task_id: task_id, csrfmiddlewaretoken: '{{csrf_token}}'},
+                    success: function (data) {
+                        alert("email sent successfully")
+
+                    }});
+            }
+
+        </script>
+
+    </div>
+
+{% endblock %}

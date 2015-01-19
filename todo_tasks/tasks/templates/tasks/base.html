@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+    <title>My Tasks</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href={% static "tasks/css/bootstrap.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "tasks/css/bootstrap.min.css" %}>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href={% static "tasks/css/style.css" %}>
+</head>
+
+<body>
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
