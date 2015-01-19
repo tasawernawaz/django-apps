@@ -4,15 +4,11 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from tasks.forms import LoginForm
 from tasks.models import Tasks
 from tasks.forms import TaskForm
-
-
-def index(request):
-    return HttpResponse("home page")
 
 
 def user_login(request):
@@ -42,7 +38,7 @@ def user_logout(request):
 
 @login_required(login_url="/tasks/login/")
 def my_tasks(request):
-    error =''
+    error = ''
     user_id = request.user.id
     if not user_id:
         return render(request, "tasks/login.html")
