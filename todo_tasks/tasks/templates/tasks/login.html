@@ -1,28 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Todo- Tasks</title>
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href={% static "tasks/css/bootstrap.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "tasks/css/bootstrap.min.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "tasks/css/style.css" %}>
-</head>
-<body>
-
-<div class="page-header">
-    <h1 class="text-center">Todo Tasks</h1>
-</div>
-<div class="container">
-    <div class="login_container">
-        <div>
-            <form action="" method="POST" id="login_form" class="form-horizontal">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input class="btn btn-default" type="submit" value="Submit">
-                <strong style="color: red">{{ error }}</strong>
-            </form>
+{% extends "tasks/base.html" %}
+{% block content %}
+    <div class="page-header">
+        <h1 class="text-center">Todo Tasks</h1>
+    </div>
+    <div class="container">
+        <div class="login_container">
+            <div>
+                <form action="" method="POST" id="login_form" class="form-horizontal">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="btn btn-default" type="submit" value="login">
+                    <strong style="color: red">{{ error }}</strong>
+                    <a href={% url "signup" %}>Create Account</a>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+{% endblock %}

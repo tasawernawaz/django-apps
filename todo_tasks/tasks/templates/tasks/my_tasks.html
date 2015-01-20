@@ -3,11 +3,12 @@
     <div class="container">
 
         <div class="page-header">
-            <div class="welcome">
-                <a role="button" class="btn_logout btn btn-link" href={% url "logout" %}>Logout</a>
-
-                <p style="text-align: right"> Welcome: {{ user.first_name }}</p>
-            </div>
+                <table >
+                    <tr>
+                        <td><b>Welcome: {{ user.first_name }}</b></td>
+                        <td><a role="button" class="btn_logout btn btn-link" href={% url "logout" %}>Logout</a></td>
+                    </tr>
+                </table>
             <h1 class="text-center">My Tasks</h1>
         </div>
 
@@ -53,6 +54,7 @@
 
         <div>
             <h3>Add new or edit previous task</h3>
+
             <div>
                 <form method="POST" action="" id="task_form" class="form-horizontal">
                     {% csrf_token %}
@@ -63,52 +65,50 @@
             </div>
         </div>
         {#javascript#}
-
-        <script>
-
-            function delete_task(task_id) {
-
-                var r = confirm("Are you sure want to delete");
-                if (r == false) {
-                    return false;
-                }
-                {#            var csrf = Ext.util.Cookies.get('csrftoken');#}
-                $.ajax({
-                    type: "POST",
-                    url: "/tasks/delete/",
-                    data: {task_id: task_id,
-                        csrfmiddlewaretoken: '{{csrf_token}}' },
-                    success: function (data) {
-                        $("#" + task_id).hide();
-
-                    }
-                });
-            }
-
-            function load_data(task_id) {
-                var $row = $("#" + task_id);
-                $("#id_short_summary").val($row.find("td:eq(0)").text());
-                $("#id_long_summary").val($row.find("td:eq(1)").text());
-                $("#id_url").val($row.find("td:eq(2)").text());
-                $("#id_task_id").val(task_id);
-
-            }
-
-
-            function send_email(task_id) {
-
-                $.ajax({
-                    type: "POST",
-                    url: "/tasks/email/",
-                    data: {task_id: task_id, csrfmiddlewaretoken: '{{csrf_token}}'},
-                    success: function (data) {
-                        alert("email sent successfully")
-
-                    }});
-            }
-
-        </script>
-
     </div>
-
 {% endblock %}
+<script>
+
+    $("#task_form").validate();
+
+    function delete_task(task_id) {
+
+        var r = confirm("Are you sure want to delete");
+        if (r == false) {
+            return false;
+        }
+        {#            var csrf = Ext.util.Cookies.get('csrftoken');#}
+        $.ajax({
+            type: "POST",
+            url: "/tasks/delete/",
+            data: {task_id: task_id,
+                csrfmiddlewaretoken: '{{csrf_token}}' },
+            success: function (data) {
+                $("#" + task_id).hide();
+
+            }
+        });
+    }
+
+    function load_data(task_id) {
+        var $row = $("#" + task_id);
+        $("#id_short_summary").val($row.find("td:eq(0)").text());
+        $("#id_long_summary").val($row.find("td:eq(1)").text());
+        $("#id_url").val($row.find("td:eq(2)").text());
+        $("#id_task_id").val(task_id);
+
+    }
+
+    function send_email(task_id) {
+
+        $.ajax({
+            type: "POST",
+            url: "/tasks/email/",
+            data: {task_id: task_id, csrfmiddlewaretoken: '{{csrf_token}}'},
+            success: function (data) {
+                alert("email sent successfully")
+
+            }});
+    }
+
+</script>

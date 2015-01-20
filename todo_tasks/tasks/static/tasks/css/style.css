@@ -9,12 +9,15 @@
 }
 
 .welcome{
+    float: right;
     /*background-color: #bce8f1 ;*/
     /*font-family: courier;*/
     text-align: right;
+
 
 }
 
 .btn_logout{
     float: right;
 }
+
