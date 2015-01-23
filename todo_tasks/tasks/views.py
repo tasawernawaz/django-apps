@@ -95,9 +95,7 @@ def send_email(request):
     server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
     msg = MIMEText('Description: %s \n Url: %s' % (t.long_summary, t.url))
     msg['Subject'] = t.short_summary
-    msg['From'] = EMAIL_HOST_USER
-    msg['To'] = request.user.email
-    server.sendmail(EMAIL_HOST_USER, ["tasawer.nawaz@arbisoft.com"], msg.as_string())
+    server.sendmail(EMAIL_HOST_USER, request.user.email, msg.as_string())
     form = TaskForm()
     return render(request, 'tasks/my_tasks.html', {form: 'form'})
 
