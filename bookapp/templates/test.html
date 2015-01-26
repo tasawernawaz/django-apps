@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% extends 'base.html' %}
+    <title></title>
+</head>
+<body>
+
+
+{% block content %}
+<table border="1" align="center" width="50%">
+    <tr>
+        <td colspan="2" align="center"><b>Pakistan Cities</b></td>
+
+    </tr>
+{% for item in itemList%}
+
+    <tr>
+      <td>
+          <b>item</b>
+      </td>
+        <td>
+            {{item}}
+        </td>
+    </tr>
+
+    {%endfor%}
+</table>
+
+{% endblock %}
+
+{% block footer %}
+{% include 'testInclude.html' %}
+{% endblock %}
+</body>
+</html>

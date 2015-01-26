@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+search results for : {{ querry }}
+<br>
+<div style="{text-align: right; border-width:thick;  border:20px;  border-color:#ff0000 }">
+    <table>
+        <caption>List of Books</caption>
+        {% for book in books %}
+            <tr>
+                <td><input type="checkbox" name="cb_book"></td>
+                <td>{{ book }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+</div>
+
+</body>
+</html>

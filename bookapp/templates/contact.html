@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+</head>
+<body>
+
+{% if form.errors %}
+    <p style="color: #ff0000"> Please Correct the error{{ form.errors|pluralize }}</p>
+{% endif %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+
+        {{ form.as_ul }}
+
+    </table>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

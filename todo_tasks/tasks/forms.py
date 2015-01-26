@@ -11,6 +11,12 @@ class LoginForm(forms.Form):
 
 
 class SignupForm(forms.Form):
+    first_name = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter First Name", 'required': ''}))
+    last_name = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter Last Name", 'required': ''}))
     username = forms.CharField(
         max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter Username", 'required': ''}))

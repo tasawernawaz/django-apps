@@ -2,15 +2,15 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="page-header">
                     <h1 class="text-center">My Tasks</h1>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <table >
                     <tr>
-                        <td><b>Welcome: {{ user.first_name }}</b></td>
+                        <td><b>Welcome: {{ user.first_name|title }} {{ user.last_name|title }}</b></td>
                         <td><a role="button" class="btn_logout btn btn-link" href={% url "logout" %}>Logout</a></td>
                     </tr>
                 </table>
@@ -42,7 +42,7 @@
                                 <td>{{ task.short_summary }}</td>
                                 <td>{{ task.long_summary }}</td>
                                 <td>{{ task.url }}</td>
-                                <td><a onclick="send_email({{ task.id }})">Email</a></td>
+                                <td><a style="cursor:pointer" onclick="send_email({{ task.id }})">Email</a></td>
                                 <td>{{ task.created }}</td>
                                 <td>{{ task.updated }}</td>
                                 <td><input class="btn btn-success" type="button" value="Edit"
@@ -115,12 +115,14 @@
         }
 
         function send_email(task_id) {
-
+            document.body.style.cursor = "progress";
             $.ajax({
                 type: "POST",
                 url: "/tasks/email/",
                 data: {task_id: task_id, csrfmiddlewaretoken: '{{csrf_token}}'},
+
                 success: function (data) {
+                    document.body.style.cursor = "default";
                     alert("email sent successfully")
 
                 }});

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Contact Form</title>
+    <script src="../static/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <style ></style>
+    <script>
+
+        $(document).ready(function(){
+            $('p').click(function(){
+                            $(this).hide("slow", function(){
+                    alert("Html: " + $('p').html());
+                });
+                            });
+{#            $("ul li:first").click(function(){#}
+{#                $(this).hide();#}
+{#            });#}
+
+            $("button").click(function(){
+               $("p").addClass("bold_div").animate({fontSize: '5em'}, "slow")
+                       .animate({left:"10%"},"slow")
+{#                               .animate({left:"-10%"},"slow")#}
+                               .animate({fontSize:'1em'});
+            });
+
+            $("ul li:first").click(function(){
+                $.get("testLoad.html");
+            });
+
+        });
+
+
+    </script>
+</head>
+<body>
+<div>
+    <h1>Fill your data..</h1>
+    <ul>
+        {% for city in cities %}
+            <li>{{ city }}</li>
+        {% endfor %}
+
+    </ul>
+</div>
+<div>
+    <img src="static/1.jpg">
+</div>
+
+<div>
+    <form action="/request_result/" method="GET">
+        {% csrf_token %}
+
+                <table>
+                  {{ form.as_table }}
+                </table>
+
+            <input type="submit" value="submit">
+
+
+
+    </form>
+
+
+</div>
+
+<div>
+    <p> thanks for visiting </p>
+    <button>hide/show</button>
+</div>
+</body>
+</html>

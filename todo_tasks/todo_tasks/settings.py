@@ -50,6 +50,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'todo_tasks.urls'
+LOGIN_URL = "/tasks/login"
 
 WSGI_APPLICATION = 'todo_tasks.wsgi.application'
 
