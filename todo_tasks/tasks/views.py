@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
@@ -70,7 +71,15 @@ def my_tasks(request):
     else:
         form = TaskForm()
     tasks_list = Tasks.objects.filter(user_id=user_id)
-    return render(request, 'tasks/my_tasks.html', {'form': form, 'tasks_list': tasks_list, 'error': error})
+    paginator = Paginator(tasks_list, 5)
+    page = request.GET.get('page')
+    try:
+        tasks = paginator.page(page)
+    except PageNotAnInteger:
+        tasks = paginator.page(1)
+    except EmptyPage:
+        tasks = paginator.page(paginator.num_pages)
+    return render(request, 'tasks/my_tasks.html', {'form': form, 'tasks_list': tasks, 'error': error})
 
 
 @login_required()
